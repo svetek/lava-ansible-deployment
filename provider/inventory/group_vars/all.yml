@@ -1,7 +1,7 @@
 # group_vars/all.yml
 ---
 ansible_user: root
-ansible_port: 20022
+ansible_port: 22
 project_name: lava
 project_type: provider
 project_unique_name: "{{ project_name }}-{{ provider_name }}-{{ project_type }}"

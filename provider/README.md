@@ -66,6 +66,13 @@ Adjust role-specific variables in `group_vars/all.yml` and `host_vars/*.yml` to 
 ## Deployment
 The deployment process involves setting directly configuring Docker networks, generating necessary configuration claims, and managing Docker containers through Docker Compose.
 
+### Prepare VM on clean system
+
+If you plan to deploy on a clean Debian or Ubuntu system without an installed Docker engine, use the `prepare` tag to install additional software:
+```bash
+ansible-playbook main.yml --tags prepare
+```
+
 ### Deploy the Service
 To deploy the RPC Provider Service:
 

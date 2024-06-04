@@ -26,8 +26,7 @@ The deployment process involves setting directly configuring Docker networks, ge
 
 ### Prepare VM on clean system
 
-If you plan deploy on clean Debian or Ubuntu without installed Docker engine, use prepare tag for install additional software: 
-
+If you plan to deploy on a clean Debian or Ubuntu system without an installed Docker engine, use the `prepare` tag to install additional software:
 ```bash
 ansible-playbook main.yml --tags prepare
 ```

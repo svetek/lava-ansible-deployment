@@ -5,6 +5,10 @@
   become: true
   gather_facts: false
   roles:
+    - role: prepare
+      tags:
+        - never
+        - prepare
     - role: deploy
       tags:
         - deploy

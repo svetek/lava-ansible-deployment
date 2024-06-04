@@ -72,6 +72,7 @@ If you plan to deploy on a clean Debian or Ubuntu system without an installed Do
 ```bash
 ansible-playbook main.yml --tags prepare
 ```
+![lava_prepare_gifsicle.gif](..%2Fguides%2Flava_prepare_gifsicle.gif)
 
 ### Deploy the Service
 To deploy the RPC Provider Service:
@@ -81,6 +82,8 @@ ansible-playbook main.yml --tags deploy
 ```
 
 > Note that by default ```anisble-playbook main.yml``` command deploys and runs the service.
+
+![lava_cache_provider_gifsicle.gif](..%2Fguides%2Flava_cache_provider_gifsicle.gif)
 
 ## Managing
 

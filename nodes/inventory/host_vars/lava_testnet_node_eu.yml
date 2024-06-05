@@ -10,8 +10,8 @@ container:
   image: svetekllc/lava                                               # Docker image name
   tag: v2.0.0-node                                                    # Docker image tag to specify version
   limits:
-    cpu: 8                                                            # Maximum number of CPU cores the container can use
-    memory: 16gb                                                      # Maximum amount of memory the container can use
+    cpu: 2                                                            # Maximum number of CPU cores the container can use
+    memory: 4gb                                                      # Maximum amount of memory the container can use
   volume_path: /opt/{{ project_unique_name }}                         # Path where volumes are mounted in the host
 
 # Node-specific configuration
@@ -53,5 +53,7 @@ download_files:
     url: https://testnet-files.itrocket.net/lava/snap_lava.tar.lz4
     file_ext: tar.lz4                                                  # File type zip / tar.lz4 / tar.zstd / none
     unpack_dir: "{{ volume_path }}"
-    commands_before_unpack: ls
+    commands_before_unpack: |
+        find "{{ volume_path }}/data" -type f ! -name 'priv_validator_state.json' -exec rm -rf {} +
+        mv "{{ volume_path }}/data/priv_validator_state.json" "{{ volume_path }}/data/priv_validator_state.json.bk"
     # commands_after_unpack:

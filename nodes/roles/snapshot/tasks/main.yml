@@ -1,0 +1,69 @@
+# roles/snapshot/tasks/main.yml
+# --log={{ download_tmp_dir }}/{{ item.key }}.{{ item.value.file_ext }}.log --log-level=notice
+---
+- name: Download files to tmp folder use aria2c
+  ansible.builtin.shell:
+    cmd: >
+      aria2c -x6 --auto-file-renaming=false
+      --continue=true {{ item.value.url }}
+      --dir={{ download_tmp_dir }}
+      --out={{ item.key }}.{{ item.value.file_ext }}
+      2>&1 >{{ download_tmp_dir }}/{{ item.key }}.{{ item.value.file_ext }}.output
+  async: 21600 # Maximum allowed time in Seconds
+  poll: 10 # Polling Interval in Seconds
+  with_dict:
+    - "{{ download_files }}"
+
+- name: Run commands before unpack
+  ansible.builtin.shell:
+    cmd: "{{ item.value.commands_before_unpack }}"
+  when: item.value.commands_before_unpack is defined
+  with_dict:
+    - "{{ download_files }}"
+
+- name: Extract tar.gz
+  ansible.builtin.shell:
+    cmd: >
+      "tar -xzf {{ download_tmp_dir }}/{{ item.key }}.{{ item.value.file_ext }} -C {{ item.value.unpack_dir }}"
+  when: item.value.file_ext == "tar.gz"
+  with_dict:
+    - "{{ download_files }}"
+
+- name: Extract tar.lz4
+  ansible.builtin.shell:
+    cmd: >
+      "lz4 -c -d {{ download_tmp_dir }}/{{ item.key }}.{{ item.value.file_ext }} | tar -x -C {{ item.value.unpack_dir }}"
+  when: item.value.file_ext == "tar.lz4"
+  with_dict:
+    - "{{ download_files }}"
+
+- name: Extract zip
+  ansible.builtin.shell: 'unzip -o {{ download_tmp_dir }}/{{ item.key }}.{{ item.value.file_ext }} -d {{ item.value.unpack_dir }}'
+  when: item.value.file_ext == "zip"
+  with_dict:
+    - "{{ download_files }}"
+
+- name: Extract tar.zstd
+  ansible.builtin.shell: 'zstd -cd {{ download_tmp_dir }}/{{ item.key }}.{{ item.value.file_ext }} | tar -x -C {{ item.value.unpack_dir }}'
+  when: item.value.file_ext == "tar.zstd"
+  with_dict:
+    - "{{ download_files }}"
+
+- name: none
+  ansible.builtin.shell: 'pwd'
+  when: item.value.file_ext == "none"
+  with_dict:
+    - "{{ download_files }}"
+
+- name: Remove snapshot file (delete file)
+  ansible.builtin.file:
+    path: "{{ download_tmp_dir }}/{{ item.key }}.{{ item.value.file_ext }}"
+    state: absent
+  with_dict:
+    - "{{ download_files }}"
+
+- name: Run commands after unpack
+  ansible.builtin.shell: "{{ item.value.commands_after_unpack }}"
+  when: item.value.commands_after_unpack is defined
+  with_dict:
+    - "{{ download_files }}"

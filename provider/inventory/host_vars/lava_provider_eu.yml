@@ -1,7 +1,6 @@
 # host_vars/lava_provider_eu.yml
 ---
 ansible_host: xxx.xxx.xxx.xxx                                         # IP address of the host
-provider_name: michael                                                # This value is used to generate unique name for directory and Docker container.
 network: testnet
 
 # Container configuration
@@ -16,21 +15,21 @@ container:
 # Provider-specific configuration
 provider_config:
   cache:
-    enable: true                                                      # Whether caching is enabled (true | false)
+    enable: false                                                     # Whether caching is enabled (true | false)
     address: lava-cache                                               # Lava Cache service address (IP address | FQDN)
     port: 23100                                                       # Lava Cache service port
   chain_id: lava-testnet-2                                            # Blockchain network identifier
   config_path: /root/.lava                                            # Path to provider configuration files
   geolocation: 2                                                      # Geolocation ID, used for regional distinctions
   log_level: info                                                     # Logging level
-  moniker: Michael                                                    # Custom name for the provider instance
+  moniker: Lava                                                       # Custom name for the provider instance
   rewards_storage_dir: rewards-storage                                # Directory for storing rewards data
   public_rpc_url: https://public-rpc-testnet2.lavanet.xyz:443/rpc/    # Public URL for RPC connections
   total_connections: 25                                               # Max number of simultaneous network connections
 
 # Wallet configuration
 wallet:
-  name: lava_michael                                                  # Wallet name
+  name: lava                                                          # Wallet name
   password: ""                                                        # Wallet password. Required if the keyring_backend parameter is equal: os, file
   keyring_backend: test                                               # Backend system for managing keys and secrets
 

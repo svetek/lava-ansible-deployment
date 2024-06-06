@@ -53,7 +53,3 @@ download_files:
     url: https://testnet-files.itrocket.net/lava/snap_lava.tar.lz4
     file_ext: tar.lz4                                                  # File type zip / tar.lz4 / tar.zstd / none
     unpack_dir: "{{ volume_path }}"
-    commands_before_unpack: |
-        find "{{ volume_path }}/data" -type f ! -name 'priv_validator_state.json' -exec rm -rf {} +
-        mv "{{ volume_path }}/data/priv_validator_state.json" "{{ volume_path }}/data/priv_validator_state.json.bk"
-    # commands_after_unpack:

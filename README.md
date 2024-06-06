@@ -8,9 +8,3 @@ This repository contains Ansible playbooks and templates essential for setting u
 - **`/ansible/node/`**: Dedicated to setting up and managing Lava nodes with a focus on ensuring optimal performance and reliability.
 
 > Each directory is equipped with its own README.md providing detailed documentation on the deployment and management processes for the respective services. Explore these directories to understand specific configurations and operational procedures related to each service.
-
-## Prepare
-![lava_node_prepare_gifsicle.gif](guides%2Flava_node_prepare_gifsicle.gif)
-
-## Deploy
-![lava_node_deploy_gifsicle.gif](guides%2Flava_node_deploy_gifsicle.gif)

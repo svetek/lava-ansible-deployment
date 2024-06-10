@@ -28,17 +28,17 @@
   when: item.value.file_ext == "tar.lz4"
 
 - name: Extract zip
-  ansible.builtin.shell: 'unzip -o {{ download_tmp_dir }}/{{ item.key }}.{{ item.value.file_ext }} -d {{ item.value.unpack_dir }}'
+  ansible.builtin.shell: "unzip -o {{ download_tmp_dir }}/{{ item.key }}.{{ item.value.file_ext }} -d {{ item.value.unpack_dir }}"
   loop: "{{ download_files | dict2items }}"
   when: item.value.file_ext == "zip"
 
 - name: Extract tar.zstd
-  ansible.builtin.shell: 'zstd -cd {{ download_tmp_dir }}/{{ item.key }}.{{ item.value.file_ext }} | tar -x -C {{ item.value.unpack_dir }}'
+  ansible.builtin.shell: "zstd -cd {{ download_tmp_dir }}/{{ item.key }}.{{ item.value.file_ext }} | tar -x -C {{ item.value.unpack_dir }}"
   loop: "{{ download_files | dict2items }}"
   when: item.value.file_ext == "tar.zstd"
 
 - name: none
-  ansible.builtin.shell: 'pwd'
+  ansible.builtin.shell: "pwd"
   loop: "{{ download_files | dict2items }}"
   when: item.value.file_ext == "none"
 
